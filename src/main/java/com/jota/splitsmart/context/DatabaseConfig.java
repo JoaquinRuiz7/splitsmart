@@ -1,6 +1,6 @@
 package com.jota.splitsmart.context;
 
-import static com.jota.splitsmart.ContextData.REPOSITORIES_PACKAGE;
+import static com.jota.splitsmart.context.ContextData.REPOSITORIES_PACKAGE;
 import static java.lang.String.format;
 
 import javax.sql.DataSource;
