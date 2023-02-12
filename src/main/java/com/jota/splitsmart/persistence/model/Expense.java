@@ -25,6 +25,9 @@ public class Expense {
     @Column
     private BigDecimal total;
 
+    @Column
+    private String description;
+
     @Column(name = "created_at")
     private Instant createdAt;
 
