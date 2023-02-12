@@ -14,7 +14,6 @@ public abstract class UserPaysExpenseMapper {
         @Mapping(expression = "java(Instant.now())", target = "createdAt"),
         @Mapping(expression = "java(Instant.now())", target = "updatedAt"),
         @Mapping(constant = "false", target = "isPayed"),
-        // @Mapping(source = "userId", target = "userId")
     })
     public abstract UserPaysExpense mapToUserPaysExpense(final Long userId, final Long expenseId,
         final BigDecimal amount);
