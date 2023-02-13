@@ -30,7 +30,7 @@ public class ExpenseController {
         return expenseService.register(userId, expenseDTO);
     }
 
-    @GetMapping("/debt/{expenseId}")
+    @GetMapping("/{expenseId}/debt")
     public List<DebtDTO> getDebt(@PathVariable final Long expenseId) {
         return expenseService.getDebts(expenseId);
     }
