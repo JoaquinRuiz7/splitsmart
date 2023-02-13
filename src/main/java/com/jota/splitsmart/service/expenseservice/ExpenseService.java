@@ -36,7 +36,7 @@ public class ExpenseService {
 
     public ExpenseDTO register(final Long userId, final ExpenseDTO request) {
 
-        if (userRepository.existsById(userId)) {
+        if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException(format("User with id %s not found", request.getUserId()));
         }
 
