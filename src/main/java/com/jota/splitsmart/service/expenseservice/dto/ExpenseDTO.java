@@ -11,5 +11,6 @@ public class ExpenseDTO {
     private Long userId;
     private BigDecimal total;
     private List<Long> payers;
+    private String description;
 
 }

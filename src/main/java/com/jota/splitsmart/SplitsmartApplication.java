@@ -1,6 +1,6 @@
 package com.jota.splitsmart;
 
-import static com.jota.splitsmart.ContextData.BASE_PACKAGE;
+import static com.jota.splitsmart.context.ContextData.BASE_PACKAGE;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
