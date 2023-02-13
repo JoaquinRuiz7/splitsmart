@@ -5,7 +5,6 @@ import com.jota.splitsmart.mapper.UserMapper;
 import com.jota.splitsmart.persistence.model.User;
 import com.jota.splitsmart.persistence.repository.UserRepository;
 import com.jota.splitsmart.service.userservice.dto.UserDTO;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +17,8 @@ public class UserService {
 
 
     public UserDTO register(final UserDTO userDTO) {
-        Optional<User> optionalUser = userRepository.findByEmail(userDTO.getEmail());
 
-        if (optionalUser.isPresent()) {
+        if (userRepository.existsByEmail(userDTO.getEmail())) {
             throw new UserAlreadyRegisteredException(
                 String.format("User with email %s already exists.", userDTO.getEmail()));
         }
