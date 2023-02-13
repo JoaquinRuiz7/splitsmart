@@ -34,4 +34,5 @@ public class ExpenseController {
     public List<DebtDTO> getDebt(@PathVariable final Long expenseId) {
         return expenseService.getDebts(expenseId);
     }
+    
 }

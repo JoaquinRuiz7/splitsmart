@@ -12,7 +12,7 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring", imports = Instant.class)
 public abstract class UserPaysExpenseMapper {
 
-    @Mappings({
+     @Mappings({
         @Mapping(target = "id", ignore = true),
         @Mapping(constant = "false", target = "isPayed"),
         @Mapping(expression = "java(Instant.now())", target = "createdAt"),
@@ -20,4 +20,5 @@ public abstract class UserPaysExpenseMapper {
     })
     public abstract UserPaysExpense mapToUserPaysExpense(final User user, final Expense expense,
         final BigDecimal amount);
+        
 }
