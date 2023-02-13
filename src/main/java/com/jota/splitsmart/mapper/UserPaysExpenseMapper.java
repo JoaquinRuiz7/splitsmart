@@ -1,5 +1,7 @@
 package com.jota.splitsmart.mapper;
 
+import com.jota.splitsmart.persistence.model.Expense;
+import com.jota.splitsmart.persistence.model.User;
 import com.jota.splitsmart.persistence.model.UserPaysExpense;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -11,10 +13,11 @@ import org.mapstruct.Mappings;
 public abstract class UserPaysExpenseMapper {
 
     @Mappings({
+        @Mapping(target = "id", ignore = true),
+        @Mapping(constant = "false", target = "isPayed"),
         @Mapping(expression = "java(Instant.now())", target = "createdAt"),
         @Mapping(expression = "java(Instant.now())", target = "updatedAt"),
-        @Mapping(constant = "false", target = "isPayed"),
     })
-    public abstract UserPaysExpense mapToUserPaysExpense(final Long userId, final Long expenseId,
+    public abstract UserPaysExpense mapToUserPaysExpense(final User user, final Expense expense,
         final BigDecimal amount);
 }
