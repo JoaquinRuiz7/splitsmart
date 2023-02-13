@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -19,12 +21,6 @@ public class UserPaysExpense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "expense_id")
-    private Long expenseId;
-
-    @Column(name = "user_id")
-    private Long userId;
-
     @Column
     private BigDecimal amount;
 
@@ -36,4 +32,12 @@ public class UserPaysExpense {
 
     @Column(name = "updated_at")
     private Instant updatedAt;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @OneToOne
+    @JoinColumn(name = "expense_id", referencedColumnName = "id")
+    private Expense expense;
 }
