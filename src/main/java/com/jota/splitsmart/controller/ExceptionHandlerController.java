@@ -10,11 +10,11 @@ import com.jota.splitsmart.exception.UserNotFoundException;
 import com.jota.splitsmart.exchangedata.ErrorDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 @Slf4j
 public class ExceptionHandlerController {
 
@@ -40,7 +40,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(UserAlreadyRegisteredException.class)
     @ResponseStatus(CONFLICT)
-    public ErrorDTO userNotFound(final UserAlreadyRegisteredException userAlreadyRegisteredException) {
+    public ErrorDTO userAlreadyRegistered(final UserAlreadyRegisteredException userAlreadyRegisteredException) {
         log.error(userAlreadyRegisteredException.getMessage());
         return ErrorDTO.builder()
             .message(userAlreadyRegisteredException.getMessage())
