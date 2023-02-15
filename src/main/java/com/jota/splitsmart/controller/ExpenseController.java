@@ -1,5 +1,7 @@
 package com.jota.splitsmart.controller;
 
+import static com.jota.splitsmart.context.ContextData.EXPENSE_PAYER_ID;
+
 import com.jota.splitsmart.service.expenseservice.ExpenseService;
 import com.jota.splitsmart.service.expenseservice.dto.DebtDTO;
 import com.jota.splitsmart.service.expenseservice.dto.ExpenseDTO;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExpenseController {
 
     private final ExpenseService expenseService;
-    private static final String EXPENSE_PAYER_ID = "x-expense-payer-id";
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
