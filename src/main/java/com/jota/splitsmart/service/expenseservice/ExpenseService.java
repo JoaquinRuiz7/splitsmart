@@ -3,6 +3,7 @@ package com.jota.splitsmart.service.expenseservice;
 import static java.lang.String.format;
 import static java.math.RoundingMode.HALF_UP;
 
+import com.jota.splitsmart.exception.ExpenseNotFoundException;
 import com.jota.splitsmart.exception.UserNotFoundException;
 import com.jota.splitsmart.mapper.ExpenseMapper;
 import com.jota.splitsmart.mapper.UserPaysExpenseMapper;
@@ -14,6 +15,7 @@ import com.jota.splitsmart.persistence.repository.UserPaysExpenseRepository;
 import com.jota.splitsmart.persistence.repository.UserRepository;
 import com.jota.splitsmart.service.expenseservice.dto.DebtDTO;
 import com.jota.splitsmart.service.expenseservice.dto.ExpenseDTO;
+import com.jota.splitsmart.service.expenseservice.request.UpdateExpenseRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +51,7 @@ public class ExpenseService {
         final Expense expense = expenseMapper.mapToExpense(request, userId);
         expenseRepository.save(expense);
 
-        final BigDecimal amountPerPayer = getAmountPerUser(request.getTotal(),
-            payers.size() + EXPENSE_PAYER_USER);
+        final BigDecimal amountPerPayer = getAmountPerUser(request.getTotal(), payers.size());
 
         payers.forEach(payer -> {
             final UserPaysExpense userPaysExpense = userPaysExpenseMapper.mapToUserPaysExpense(payer, expense,
@@ -73,7 +74,29 @@ public class ExpenseService {
     }
 
     private BigDecimal getAmountPerUser(final BigDecimal total, final int payers) {
-        return total.divide(BigDecimal.valueOf(payers), HALF_UP).setScale(2, HALF_UP);
+        return total.divide(BigDecimal.valueOf(payers + EXPENSE_PAYER_USER), HALF_UP).setScale(2, HALF_UP);
+    }
+
+    public ExpenseDTO updateExpense(final Long expenseId, final UpdateExpenseRequest updateExpenseRequest) {
+        Expense expense = expenseRepository.findById(expenseId)
+            .orElseThrow(() -> new ExpenseNotFoundException(format("Exception with id %s not found.", expenseId)));
+
+        expense.setDescription(updateExpenseRequest.getDescription());
+        expense.setTotal(updateExpenseRequest.getTotal());
+        expenseRepository.save(expense);
+
+        log.info("Updated expense with id {}", expenseId);
+
+        final List<UserPaysExpense> payers = userPaysExpenseRepository.findAllByExpenseId(expenseId);
+        final BigDecimal amount = getAmountPerUser(expense.getTotal(), payers.size());
+
+        payers.forEach(userPaysExpense -> {
+            userPaysExpense.setAmount(amount);
+            userPaysExpenseRepository.save(userPaysExpense);
+            log.info("Updated user pays expense with id {} new amount $ {}", userPaysExpense.getId(), amount);
+        });
+
+        return expenseMapper.mapToRegisterExpenseResponse(expense);
     }
 
 }

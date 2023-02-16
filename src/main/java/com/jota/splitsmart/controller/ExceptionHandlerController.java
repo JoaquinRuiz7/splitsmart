@@ -8,6 +8,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import com.jota.splitsmart.exception.UserAlreadyRegisteredException;
 import com.jota.splitsmart.exception.UserNotFoundException;
 import com.jota.splitsmart.exchangedata.ErrorDTO;
+import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,6 +46,16 @@ public class ExceptionHandlerController {
         return ErrorDTO.builder()
             .message(userAlreadyRegisteredException.getMessage())
             .status(CONFLICT.value())
+            .build();
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ErrorDTO constraintException(ConstraintViolationException e) {
+        log.info(e.getMessage());
+        return ErrorDTO.builder()
+            .message(e.getMessage())
+            .status(BAD_REQUEST.value())
             .build();
     }
 

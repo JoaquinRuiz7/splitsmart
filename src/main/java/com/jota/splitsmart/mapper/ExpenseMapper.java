@@ -8,8 +8,9 @@ import java.time.Instant;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring", imports = Instant.class)
+@Mapper(componentModel = "spring", imports = Instant.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public abstract class ExpenseMapper {
 
     @Mappings({
@@ -18,6 +19,11 @@ public abstract class ExpenseMapper {
         @Mapping(source = "userId", target = "userId")
     })
     public abstract Expense mapToExpense(final ExpenseDTO expenseDTO, final Long userId);
+
+    @Mappings({
+        @Mapping(expression = "java(Instant.now())", target = "updatedAt"),
+    })
+    public abstract Expense mapToExpenseUpdate(final ExpenseDTO expenseDTO);
 
     public abstract ExpenseDTO mapToRegisterExpenseResponse(final Expense expense);
 
