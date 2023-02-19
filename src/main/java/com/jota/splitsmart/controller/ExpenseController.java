@@ -9,6 +9,7 @@ import com.jota.splitsmart.service.expenseservice.request.UpdateExpenseRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,11 @@ public class ExpenseController {
     public ExpenseDTO updateExpense(@PathVariable final Long expenseId,
         @RequestBody final UpdateExpenseRequest updateExpenseRequest) {
         return expenseService.updateExpense(expenseId, updateExpenseRequest);
+    }
+
+    @DeleteMapping("/{userId}/remove-user/{expenseId}")
+    public void removePayerFromExpense(@PathVariable final Long userId,@PathVariable final Long expenseId){
+        expenseService.removeUser(userId,expenseId);
     }
 
 }
