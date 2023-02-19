@@ -39,13 +39,15 @@ public class ExpenseService {
     public ExpenseDTO register(final Long userId, final ExpenseDTO request) {
 
         if (!userRepository.existsById(userId)) {
-            throw new UserNotFoundException(format("User with id %s not found", request.getUserId()));
+            throw new UserNotFoundException(
+                format("User with id %s not found", request.getUserId()));
         }
 
         List<User> payers = userRepository.findMultipleById(request.getPayers());
 
         if (payers.isEmpty()) {
-            throw new UserNotFoundException(format("Users with ids %s not found", request.getPayers()));
+            throw new UserNotFoundException(
+                format("Users with ids %s not found", request.getPayers()));
         }
 
         final Expense expense = expenseMapper.mapToExpense(request, userId);
@@ -54,7 +56,8 @@ public class ExpenseService {
         final BigDecimal amountPerPayer = getAmountPerUser(request.getTotal(), payers.size());
 
         payers.forEach(payer -> {
-            final UserPaysExpense userPaysExpense = userPaysExpenseMapper.mapToUserPaysExpense(payer, expense,
+            final UserPaysExpense userPaysExpense = userPaysExpenseMapper.mapToUserPaysExpense(
+                payer, expense,
                 amountPerPayer);
             userPaysExpenseRepository.save(userPaysExpense);
         });
@@ -74,12 +77,15 @@ public class ExpenseService {
     }
 
     private BigDecimal getAmountPerUser(final BigDecimal total, final int payers) {
-        return total.divide(BigDecimal.valueOf(payers + EXPENSE_PAYER_USER), HALF_UP).setScale(2, HALF_UP);
+        return total.divide(BigDecimal.valueOf(payers + EXPENSE_PAYER_USER), HALF_UP)
+            .setScale(2, HALF_UP);
     }
 
-    public ExpenseDTO updateExpense(final Long expenseId, final UpdateExpenseRequest updateExpenseRequest) {
+    public ExpenseDTO updateExpense(final Long expenseId,
+        final UpdateExpenseRequest updateExpenseRequest) {
         Expense expense = expenseRepository.findById(expenseId)
-            .orElseThrow(() -> new ExpenseNotFoundException(format("Exception with id %s not found.", expenseId)));
+            .orElseThrow(() -> new ExpenseNotFoundException(
+                format("Exception with id %s not found.", expenseId)));
 
         expense.setDescription(updateExpenseRequest.getDescription());
         expense.setTotal(updateExpenseRequest.getTotal());
@@ -87,16 +93,27 @@ public class ExpenseService {
 
         log.info("Updated expense with id {}", expenseId);
 
-        final List<UserPaysExpense> payers = userPaysExpenseRepository.findAllByExpenseId(expenseId);
-        final BigDecimal amount = getAmountPerUser(expense.getTotal(), payers.size());
+        updateAmountPerUser(expenseId, expense.getTotal());
+        return expenseMapper.mapToRegisterExpenseResponse(expense);
+    }
 
+    public void removeUser(final Long userId, final Long expenseId) {
+        UserPaysExpense userPaysExpense = userPaysExpenseRepository.findByPayer(userId, expenseId);
+        userPaysExpenseRepository.delete(userPaysExpense);
+        log.info("Deleted user with id {} from expense {}", userId, expenseId);
+        updateAmountPerUser(expenseId, userPaysExpense.getExpense().getTotal());
+    }
+
+    private void updateAmountPerUser(final Long expenseId, BigDecimal total) {
+        final List<UserPaysExpense> payers = userPaysExpenseRepository.findAllByExpenseId(
+            expenseId);
+        final BigDecimal amount = getAmountPerUser(total, payers.size());
         payers.forEach(userPaysExpense -> {
             userPaysExpense.setAmount(amount);
             userPaysExpenseRepository.save(userPaysExpense);
-            log.info("Updated user pays expense with id {} new amount $ {}", userPaysExpense.getId(), amount);
+            log.info("Updated user pays expense with id {} new amount $ {}",
+                userPaysExpense.getId(), amount);
         });
-
-        return expenseMapper.mapToRegisterExpenseResponse(expense);
     }
 
 }
