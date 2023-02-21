@@ -16,7 +16,7 @@ public class DebtsController {
 
     private final DebtsService userDebtsService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId}/user-debt")
     public List<DebtDTO> getDebts(@PathVariable final Long userId) {
         return userDebtsService.getDebts(userId);
     }
