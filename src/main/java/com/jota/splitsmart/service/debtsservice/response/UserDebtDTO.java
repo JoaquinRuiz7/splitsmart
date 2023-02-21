@@ -1,13 +1,13 @@
-package com.jota.splitsmart.service.expenseservice.dto;
+package com.jota.splitsmart.service.debtsservice.response;
 
 import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
-public class DebtDTO {
+public class UserDebtDTO {
 
     private String description;
-    private String userName;
+    private String payTo;
     private BigDecimal amount;
     private Boolean isPayed;
 }

@@ -1,9 +1,7 @@
 package com.jota.splitsmart.mapper;
 
-import com.jota.splitsmart.persistence.model.Debts;
 import com.jota.splitsmart.persistence.model.Expense;
 import com.jota.splitsmart.persistence.model.User;
-import com.jota.splitsmart.service.expenseservice.dto.DebtDTO;
 import com.jota.splitsmart.service.expenseservice.dto.ExpenseDTO;
 import java.time.Instant;
 import org.mapstruct.Mapper;
@@ -23,11 +21,4 @@ public abstract class ExpenseMapper {
 
     public abstract ExpenseDTO mapToRegisterExpenseResponse(final Expense expense);
 
-    @Mappings({
-        @Mapping(source = "userDebt.expense.description", target = "description"),
-        @Mapping(source = "userDebt.user.name", target = "userName"),
-        @Mapping(source = "userDebt.amount", target = "amount"),
-        @Mapping(source = "userDebt.isPayed", target = "isPayed")
-    })
-    public abstract DebtDTO mapToDebtDTO(final Debts userDebt);
 }

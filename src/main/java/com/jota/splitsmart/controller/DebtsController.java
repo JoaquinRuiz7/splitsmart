@@ -1,7 +1,8 @@
 package com.jota.splitsmart.controller;
 
 import com.jota.splitsmart.service.debtsservice.DebtsService;
-import com.jota.splitsmart.service.debtsservice.response.DebtDTO;
+import com.jota.splitsmart.service.debtsservice.response.ExpenseDebtDTO;
+import com.jota.splitsmart.service.debtsservice.response.UserDebtDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DebtsController {
 
-    private final DebtsService userDebtsService;
+    private final DebtsService debts;
 
     @GetMapping("/{userId}/user-debt")
-    public List<DebtDTO> getDebts(@PathVariable final Long userId) {
-        return userDebtsService.getDebts(userId);
+    public List<UserDebtDTO> getUserDebts(@PathVariable final Long userId) {
+        return debts.getUserDebts(userId);
+    }
+
+    @GetMapping("/{expenseId}/expense-debt")
+    public List<ExpenseDebtDTO> getExpenseDebts(@PathVariable final Long expenseId) {
+        return debts.getExpenseDebts(expenseId);
     }
 }

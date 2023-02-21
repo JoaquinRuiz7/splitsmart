@@ -13,11 +13,9 @@ import com.jota.splitsmart.persistence.model.User;
 import com.jota.splitsmart.persistence.repository.DebtsRepository;
 import com.jota.splitsmart.persistence.repository.ExpenseRepository;
 import com.jota.splitsmart.persistence.repository.UserRepository;
-import com.jota.splitsmart.service.expenseservice.dto.DebtDTO;
 import com.jota.splitsmart.service.expenseservice.dto.ExpenseDTO;
 import com.jota.splitsmart.service.expenseservice.request.UpdateExpenseRequest;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +27,7 @@ import org.springframework.stereotype.Service;
 public class ExpenseService {
 
     private final ExpenseRepository expenseRepository;
-    private final DebtsRepository userDebtsRepository;
+    private final DebtsRepository debtsRepository;
     private final ExpenseMapper expenseMapper;
     private final DebtsMapper userPaysExpenseMapper;
     private final UserRepository userRepository;
@@ -54,21 +52,10 @@ public class ExpenseService {
 
         payers.forEach(payer -> {
             final Debts userDebt = userPaysExpenseMapper.mapToDebt(payer, expense, amountPerPayer);
-            userDebtsRepository.save(userDebt);
+            debtsRepository.save(userDebt);
         });
 
         return expenseMapper.mapToRegisterExpenseResponse(expense);
-    }
-
-    public List<DebtDTO> getDebts(final Long expenseId) {
-        List<DebtDTO> debtDTOS = new ArrayList<>();
-
-        userDebtsRepository.findAllByExpenseId(expenseId).forEach(userDebt -> {
-            DebtDTO debtDTO = expenseMapper.mapToDebtDTO(userDebt);
-            debtDTOS.add(debtDTO);
-        });
-
-        return debtDTOS;
     }
 
     private BigDecimal getAmountPerUser(final BigDecimal total, final int payers) {
@@ -92,20 +79,20 @@ public class ExpenseService {
     }
 
     public void removeUser(final Long userId, final Long expenseId) {
-        Debts userPaysExpense = userDebtsRepository.findByUserAndExpense(userId, expenseId);
-        userDebtsRepository.delete(userPaysExpense);
+        Debts userPaysExpense = debtsRepository.findByUserAndExpense(userId, expenseId);
+        debtsRepository.delete(userPaysExpense);
         log.info("Deleted user with id {} from expense {}", userId, expenseId);
         updateAmountPerUser(expenseId, userPaysExpense.getExpense().getTotal());
     }
 
     private void updateAmountPerUser(final Long expenseId, BigDecimal total) {
-        final List<Debts> payers = userDebtsRepository.findAllByExpenseId(
+        final List<Debts> payers = debtsRepository.findAllByExpenseId(
             expenseId);
         final BigDecimal amount = getAmountPerUser(total, payers.size());
 
         payers.forEach(userPaysExpense -> {
             userPaysExpense.setAmount(amount);
-            userDebtsRepository.save(userPaysExpense);
+            debtsRepository.save(userPaysExpense);
             log.info("Updated user pays expense with id {} new amount $ {}",
                 userPaysExpense.getId(), amount);
         });
