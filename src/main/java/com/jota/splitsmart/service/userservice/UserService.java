@@ -1,5 +1,7 @@
 package com.jota.splitsmart.service.userservice;
 
+import static java.lang.String.format;
+
 import com.jota.splitsmart.exception.UserAlreadyRegisteredException;
 import com.jota.splitsmart.mapper.UserMapper;
 import com.jota.splitsmart.persistence.model.User;
@@ -19,8 +21,7 @@ public class UserService {
     public UserDTO register(final UserDTO userDTO) {
 
         if (userRepository.existsByEmail(userDTO.getEmail())) {
-            throw new UserAlreadyRegisteredException(
-                String.format("User with email %s already exists.", userDTO.getEmail()));
+            throw new UserAlreadyRegisteredException(format("User with email %s already exists.", userDTO.getEmail()));
         }
 
         final User user = userMapper.mapToUser(userDTO);
