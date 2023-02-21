@@ -35,7 +35,7 @@ public class ExpenseController {
     }
 
     @GetMapping("/{expenseId}/debt")
-    public List<DebtDTO> getDebt(@PathVariable final Long expenseId) {
+    public List<DebtDTO> getDebts(@PathVariable final Long expenseId) {
         return expenseService.getDebts(expenseId);
     }
 
@@ -45,9 +45,9 @@ public class ExpenseController {
         return expenseService.updateExpense(expenseId, updateExpenseRequest);
     }
 
-    @DeleteMapping("/{userId}/remove-user/{expenseId}")
-    public void removePayerFromExpense(@PathVariable final Long userId,@PathVariable final Long expenseId){
-        expenseService.removeUser(userId,expenseId);
+    @DeleteMapping("/{userId}/remove-from-debt/{expenseId}")
+    public void removePayerFromExpense(@PathVariable final Long userId, @PathVariable final Long expenseId) {
+        expenseService.removeUser(userId, expenseId);
     }
 
 }
