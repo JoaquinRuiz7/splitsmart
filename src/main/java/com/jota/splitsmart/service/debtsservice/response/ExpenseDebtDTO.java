@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
-public class DebtDTO {
+public class ExpenseDebtDTO {
 
     private String description;
-    private String payTo;
+    private String userName;
     private BigDecimal amount;
     private Boolean isPayed;
 }

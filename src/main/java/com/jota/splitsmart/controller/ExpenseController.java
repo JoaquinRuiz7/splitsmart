@@ -3,14 +3,10 @@ package com.jota.splitsmart.controller;
 import static com.jota.splitsmart.context.ContextData.EXPENSE_PAYER_ID;
 
 import com.jota.splitsmart.service.expenseservice.ExpenseService;
-import com.jota.splitsmart.service.expenseservice.dto.DebtDTO;
 import com.jota.splitsmart.service.expenseservice.dto.ExpenseDTO;
 import com.jota.splitsmart.service.expenseservice.request.UpdateExpenseRequest;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,20 +30,10 @@ public class ExpenseController {
         return expenseService.register(userId, expenseDTO);
     }
 
-    @GetMapping("/{expenseId}/debt")
-    public List<DebtDTO> getDebts(@PathVariable final Long expenseId) {
-        return expenseService.getDebts(expenseId);
-    }
-
     @PatchMapping("/{expenseId}")
     public ExpenseDTO updateExpense(@PathVariable final Long expenseId,
         @RequestBody final UpdateExpenseRequest updateExpenseRequest) {
         return expenseService.updateExpense(expenseId, updateExpenseRequest);
-    }
-
-    @DeleteMapping("/{userId}/remove-from-debt/{expenseId}")
-    public void removePayerFromExpense(@PathVariable final Long userId, @PathVariable final Long expenseId) {
-        expenseService.removeUser(userId, expenseId);
     }
 
 }
