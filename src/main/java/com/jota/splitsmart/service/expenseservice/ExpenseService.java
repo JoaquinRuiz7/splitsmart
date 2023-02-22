@@ -78,12 +78,6 @@ public class ExpenseService {
         return expenseMapper.mapToRegisterExpenseResponse(expense);
     }
 
-    public void removeUser(final Long userId, final Long expenseId) {
-        Debts userPaysExpense = debtsRepository.findByUserAndExpense(userId, expenseId);
-        debtsRepository.delete(userPaysExpense);
-        log.info("Deleted user with id {} from expense {}", userId, expenseId);
-        updateAmountPerUser(expenseId, userPaysExpense.getExpense().getTotal());
-    }
 
     private void updateAmountPerUser(final Long expenseId, BigDecimal total) {
         final List<Debts> payers = debtsRepository.findAllByExpenseId(
