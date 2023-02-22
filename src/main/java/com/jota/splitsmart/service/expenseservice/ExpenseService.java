@@ -20,6 +20,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +35,7 @@ public class ExpenseService {
 
     private static final int EXPENSE_PAYER_USER = 1;
 
+    @Transactional(transactionManager = "splitSmartTransactionManager")
     public ExpenseDTO register(final Long userId, final ExpenseDTO request) {
 
         User user = userRepository.findById(userId)
