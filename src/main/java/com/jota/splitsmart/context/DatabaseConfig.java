@@ -1,6 +1,7 @@
 package com.jota.splitsmart.context;
 
-import static com.jota.splitsmart.context.ContextData.REPOSITORIES_PACKAGE;
+import static com.jota.splitsmart.context.ContextData.PERSISTENCE_MODEL_PACKAGE;
+import static com.jota.splitsmart.context.ContextData.PERSISTENCE_REPOSITORIES_PACKAGE;
 import static java.lang.String.format;
 
 import javax.sql.DataSource;
@@ -9,9 +10,16 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(basePackages = REPOSITORIES_PACKAGE)
+@EnableJpaRepositories(basePackages = PERSISTENCE_REPOSITORIES_PACKAGE, transactionManagerRef = "splitSmartTransactionManager")
+@EnableTransactionManagement
 public class DatabaseConfig {
 
     private static final String JDBC = "jdbc:postgresql://";
@@ -36,5 +44,22 @@ public class DatabaseConfig {
         dataSourceBuilder.username(username);
         dataSourceBuilder.password(password);
         return dataSourceBuilder.build();
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(getDataSource());
+        em.setPackagesToScan(PERSISTENCE_MODEL_PACKAGE);
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        return em;
+    }
+
+    @Bean
+    public PlatformTransactionManager splitSmartTransactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+        return transactionManager;
     }
 }
