@@ -1,7 +1,8 @@
 package com.jota.splitsmart.controller;
 
 import com.jota.splitsmart.service.userservice.UserService;
-import com.jota.splitsmart.service.userservice.dto.UserDTO;
+import com.jota.splitsmart.service.userservice.request.RegisterUserRequest;
+import com.jota.splitsmart.service.userservice.response.RegisterUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO register(@RequestBody final UserDTO userDTO) {
+    public RegisterUserResponse register(@RequestBody final RegisterUserRequest userDTO) {
         return userService.register(userDTO);
     }
 }
