@@ -1,6 +1,6 @@
 package com.jota.splitsmart.controller;
 
-import static com.jota.splitsmart.context.ContextData.EXPENSE_PAYER_ID;
+import static com.jota.splitsmart.context.ContextData.USER_ID;
 
 import com.jota.splitsmart.service.expenseservice.ExpenseService;
 import com.jota.splitsmart.service.expenseservice.dto.ExpenseDTO;
@@ -25,7 +25,7 @@ public class ExpenseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ExpenseDTO register(@RequestHeader(name = EXPENSE_PAYER_ID) final Long userId,
+    public ExpenseDTO register(@RequestHeader(name = USER_ID) final Long userId,
         @RequestBody final ExpenseDTO expenseDTO) {
         return expenseService.register(userId, expenseDTO);
     }
