@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.Instant;
 import lombok.Data;
@@ -17,13 +19,18 @@ public class FriendRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_id")
-    private Long userId;
-    @Column(name = "friend_id")
-    private Long friendId;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @OneToOne()
+    @JoinColumn(name = "friend_id", referencedColumnName = "id")
+    private User friend;
+    
     @Column(name = "created_at")
     private Instant createdAt;
     @Column(name = "updated_at")
     private Instant updatedAt;
-    
+
 }

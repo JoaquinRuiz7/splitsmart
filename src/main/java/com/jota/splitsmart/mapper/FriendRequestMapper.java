@@ -1,6 +1,8 @@
 package com.jota.splitsmart.mapper;
 
 import com.jota.splitsmart.persistence.model.FriendRequest;
+import com.jota.splitsmart.persistence.model.User;
+import com.jota.splitsmart.service.friendrequestservice.response.FriendRequestDTO;
 import java.time.Instant;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,5 +16,12 @@ public abstract class FriendRequestMapper {
         @Mapping(expression = "java(Instant.now())", target = "createdAt"),
         @Mapping(expression = "java(Instant.now())", target = "updatedAt"),
     })
-    public abstract FriendRequest mapToFriendRequest(final Long userId, final Long friendId);
+    public abstract FriendRequest mapToFriendRequest(final User user, final User friend);
+
+    @Mappings({
+        @Mapping(source = "friendRequest.user.name", target = "name"),
+        @Mapping(source = "friendRequest.user.email", target = "email"),
+        @Mapping(source = "friendRequest.id", target = "friendRequestId"),
+    })
+    public abstract FriendRequestDTO mapToFriendRequestDTO(final FriendRequest friendRequest);
 }

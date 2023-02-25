@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import com.jota.splitsmart.exception.FriendAlreadyAddedException;
 import com.jota.splitsmart.exception.UserAlreadyRegisteredException;
 import com.jota.splitsmart.exception.UserNotFoundException;
 import com.jota.splitsmart.exchangedata.ErrorDTO;
@@ -56,6 +57,16 @@ public class ExceptionHandlerController {
         return ErrorDTO.builder()
             .message(e.getMessage())
             .status(BAD_REQUEST.value())
+            .build();
+    }
+
+    @ExceptionHandler(FriendAlreadyAddedException.class)
+    @ResponseStatus(CONFLICT)
+    public ErrorDTO contactAlreadyFriend(final FriendAlreadyAddedException FriendAlreadyAddedException) {
+        log.error(FriendAlreadyAddedException.getMessage());
+        return ErrorDTO.builder()
+            .message(FriendAlreadyAddedException.getMessage())
+            .status(CONFLICT.value())
             .build();
     }
 
