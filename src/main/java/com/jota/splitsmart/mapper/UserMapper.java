@@ -1,7 +1,8 @@
 package com.jota.splitsmart.mapper;
 
 import com.jota.splitsmart.persistence.model.User;
-import com.jota.splitsmart.service.userservice.dto.UserDTO;
+import com.jota.splitsmart.service.userservice.request.RegisterUserRequest;
+import com.jota.splitsmart.service.userservice.response.RegisterUserResponse;
 import java.time.Instant;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,8 +15,8 @@ public abstract class UserMapper {
         @Mapping(expression = "java(Instant.now())", target = "createdAt"),
         @Mapping(expression = "java(Instant.now())", target = "updatedAt"),
     })
-    public abstract User mapToUser(final UserDTO userDTO);
+    public abstract User mapToUser(final RegisterUserRequest userDTO);
 
-    public abstract UserDTO mapToUserDTO(final User user);
+    public abstract RegisterUserResponse mapToUserDTO(final User user);
 
 }

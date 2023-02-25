@@ -1,13 +1,13 @@
-package com.jota.splitsmart.service.userservice.dto;
+package com.jota.splitsmart.service.userfriendservice.response;
 
 import lombok.Data;
 
 @Data
-public class UserDTO {
+public class FriendResponseDTO {
 
     private Long id;
     private String name;
     private String email;
     private String cellphone;
-    private String password;
+
 }
