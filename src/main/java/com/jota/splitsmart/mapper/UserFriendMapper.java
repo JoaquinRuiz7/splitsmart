@@ -12,8 +12,8 @@ public abstract class UserFriendMapper {
 
     @Mappings({
         @Mapping(target = "id", ignore = true),
-        @Mapping(source = "user.id", target = "userId"),
-        @Mapping(source = "friend.id", target = "friendId"),
+        @Mapping(source = "user", target = "user"),
+        @Mapping(source = "friend", target = "friend"),
         @Mapping(expression = "java(Instant.now())", target = "createdAt"),
         @Mapping(expression = "java(Instant.now())", target = "updatedAt"),
     })
