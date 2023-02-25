@@ -1,4 +1,4 @@
-package com.jota.splitsmart.context;
+package com.jota.splitsmart.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class Security {
-    
+
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
