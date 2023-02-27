@@ -1,7 +1,6 @@
 package com.jota.splitsmart.security.filters;
 
-import com.jota.splitsmart.exception.InvalidTokenException;
-import com.jota.splitsmart.exception.NoTokenException;
+import com.jota.splitsmart.context.ContextData;
 import com.jota.splitsmart.security.JWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,10 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-@Component
 @RequiredArgsConstructor
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
@@ -26,18 +23,29 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         try {
-            String token = getTokenFromRequest(request);
+            final String token = getTokenFromRequest(request);
 
             if (token == null) {
-                throw new NoTokenException("No auth token sent in request.");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                return;
             }
 
             if (!jwt.validateJwtToken(token)) {
-                throw new InvalidTokenException("The token is invalid.");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                return;
             }
-            
+
+            final boolean hasUserIdHeader = request.getHeader(ContextData.USER_ID) != null;
+
+            if (hasUserIdHeader) {
+                final Long tokenUserId = Long.valueOf(request.getHeader(ContextData.USER_ID));
+                if (!tokenUserId.equals(jwt.getUserIdFromToken(token))) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+                    return;
+                }
+            }
+
         } catch (Exception ex) {
-            // Handle exceptions here
             SecurityContextHolder.clearContext();
             response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized");
             return;

@@ -3,13 +3,13 @@ package com.jota.splitsmart.controller;
 import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
+import com.jota.splitsmart.exception.ForbiddenException;
 import com.jota.splitsmart.exception.FriendAlreadyAddedException;
-import com.jota.splitsmart.exception.InvalidTokenException;
 import com.jota.splitsmart.exception.InvalidUserCredentialsException;
-import com.jota.splitsmart.exception.NoTokenException;
 import com.jota.splitsmart.exception.UserAlreadyRegisteredException;
 import com.jota.splitsmart.exception.UserNotFoundException;
 import com.jota.splitsmart.exchangedata.ErrorDTO;
@@ -84,26 +84,15 @@ public class ExceptionHandlerController {
             .build();
     }
 
-    @ExceptionHandler(NoTokenException.class)
-    @ResponseStatus(UNAUTHORIZED)
-    public ErrorDTO unauthorized(final NoTokenException noTokenException) {
-        log.error(noTokenException.getMessage());
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(FORBIDDEN)
+    public ErrorDTO unauthorized(final ForbiddenException forbiddenException) {
+        log.error(forbiddenException.getMessage());
         return ErrorDTO.builder()
-            .message(noTokenException.getMessage())
-            .status(UNAUTHORIZED.value())
+            .message(forbiddenException.getMessage())
+            .status(FORBIDDEN.value())
             .build();
     }
-
-    @ExceptionHandler(InvalidTokenException.class)
-    @ResponseStatus(UNAUTHORIZED)
-    public ErrorDTO unauthorized(final InvalidTokenException invalidTokenException) {
-        log.error(invalidTokenException.getMessage());
-        return ErrorDTO.builder()
-            .message(invalidTokenException.getMessage())
-            .status(UNAUTHORIZED.value())
-            .build();
-    }
-
 
     private String buildMessage(final MethodArgumentNotValidException methodArgumentNotValidException) {
         return format(

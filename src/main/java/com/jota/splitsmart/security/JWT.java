@@ -1,5 +1,6 @@
 package com.jota.splitsmart.security;
 
+import com.jota.splitsmart.persistence.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -19,26 +20,26 @@ public class JWT {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("${jwt.expiration}")
-    private int jwtExpirationMs;
+    private static final int EXPIRATION_TIME = 1000 * 60 * 60 * 24;
 
-    public String generateJwtToken(final String email) {
-        Date expirationDate = new Date((new Date()).getTime() + jwtExpirationMs);
+    public String generateJwtToken(final User user) {
+        Date expirationDate = new Date((new Date()).getTime() + EXPIRATION_TIME);
+
         return Jwts.builder()
-            .setSubject(email)
+            .setSubject(String.valueOf(user.getId()))
             .setIssuedAt(new Date())
             .setExpiration(expirationDate)
             .signWith(SignatureAlgorithm.HS512, jwtSecret)
             .compact();
     }
 
-    public String getEmailFromJWT(final String token) {
+    public Long getUserIdFromToken(final String token) {
         Claims claims = Jwts.parser()
             .setSigningKey(jwtSecret)
             .parseClaimsJws(token)
             .getBody();
 
-        return claims.getSubject();
+        return Long.valueOf(claims.getSubject());
     }
 
     public boolean validateJwtToken(final String authToken) {

@@ -1,5 +1,6 @@
 package com.jota.splitsmart.controller;
 
+import com.jota.splitsmart.security.SecurityGuard;
 import com.jota.splitsmart.service.debtsservice.DebtsService;
 import com.jota.splitsmart.service.debtsservice.response.ExpenseDebtDTO;
 import com.jota.splitsmart.service.debtsservice.response.UserDebtDTO;
@@ -17,19 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class DebtsController {
 
     private final DebtsService debtsService;
+    private final SecurityGuard securityGuard;
 
     @GetMapping("/{userId}/user-debt")
     public List<UserDebtDTO> getUserDebts(@PathVariable final Long userId) {
+        securityGuard.checkIfTokenBelongsToUser(userId);
         return debtsService.getUserDebts(userId);
     }
 
     @GetMapping("/{expenseId}/expense-debt")
     public List<ExpenseDebtDTO> getExpenseDebts(@PathVariable final Long expenseId) {
+        securityGuard.checkIfDebtBelongsToUser(expenseId);
         return debtsService.getExpenseDebts(expenseId);
     }
 
     @DeleteMapping("/{userId}/remove-from-expense/{expenseId}")
     public void removePayerFromExpense(@PathVariable final Long userId, @PathVariable final Long expenseId) {
+        securityGuard.checkIfTokenBelongsToUser(userId);
+        securityGuard.checkIfDebtBelongsToUser(expenseId);
         debtsService.removeUser(userId, expenseId);
     }
 

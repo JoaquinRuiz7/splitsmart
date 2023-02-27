@@ -37,7 +37,7 @@ public class AuthService {
 
         log.info("Generating JWT for user {}", user.getId());
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
-        loginResponseDTO.setToken(jwt.generateJwtToken(user.getEmail()));
+        loginResponseDTO.setToken(jwt.generateJwtToken(user));
         loginResponseDTO.setUserId(user.getId());
 
         return loginResponseDTO;
