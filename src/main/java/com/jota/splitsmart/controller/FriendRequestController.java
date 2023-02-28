@@ -2,6 +2,7 @@ package com.jota.splitsmart.controller;
 
 import static com.jota.splitsmart.context.ContextData.USER_ID;
 
+import com.jota.splitsmart.security.SecurityGuard;
 import com.jota.splitsmart.service.friendrequestservice.FriendRequestService;
 import com.jota.splitsmart.service.friendrequestservice.request.AcceptRejectFriendRequestDTO;
 import com.jota.splitsmart.service.friendrequestservice.request.AddFriendRequestDTO;
@@ -25,22 +26,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class FriendRequestController {
 
     private final FriendRequestService friendRequestService;
+    private final SecurityGuard securityGuard;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void sendFriendRequest(@RequestHeader(name = USER_ID) final Long userId, @RequestBody final
     AddFriendRequestDTO addFriendRequestDTO) {
+        securityGuard.checkIfTokenBelongsToUser(userId);
         friendRequestService.sendFriendRequest(userId, addFriendRequestDTO);
     }
 
     @GetMapping("/{userId}/friend-requests")
     public List<FriendRequestDTO> getReceivedFriendRequests(@PathVariable final Long userId) {
+        securityGuard.checkIfTokenBelongsToUser(userId);
         return friendRequestService.getFriendRequests(userId);
     }
 
     @DeleteMapping("/{friendRequestId}")
     public void manageFriendRequest(@PathVariable final Long friendRequestId,
         @RequestBody final AcceptRejectFriendRequestDTO acceptRejectFriendRequestDTO) {
+        securityGuard.checkIfFriendRequestBelongsToUser(friendRequestId);
         friendRequestService.acceptFriendRequest(friendRequestId, acceptRejectFriendRequestDTO);
     }
 }

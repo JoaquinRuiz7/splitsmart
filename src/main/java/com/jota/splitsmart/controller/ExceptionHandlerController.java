@@ -3,9 +3,13 @@ package com.jota.splitsmart.controller;
 import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
+import com.jota.splitsmart.exception.ForbiddenException;
 import com.jota.splitsmart.exception.FriendAlreadyAddedException;
+import com.jota.splitsmart.exception.InvalidUserCredentialsException;
 import com.jota.splitsmart.exception.UserAlreadyRegisteredException;
 import com.jota.splitsmart.exception.UserNotFoundException;
 import com.jota.splitsmart.exchangedata.ErrorDTO;
@@ -62,11 +66,31 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(FriendAlreadyAddedException.class)
     @ResponseStatus(CONFLICT)
-    public ErrorDTO contactAlreadyFriend(final FriendAlreadyAddedException FriendAlreadyAddedException) {
-        log.error(FriendAlreadyAddedException.getMessage());
+    public ErrorDTO contactAlreadyFriend(final FriendAlreadyAddedException friendAlreadyAddedException) {
+        log.error(friendAlreadyAddedException.getMessage());
         return ErrorDTO.builder()
-            .message(FriendAlreadyAddedException.getMessage())
+            .message(friendAlreadyAddedException.getMessage())
             .status(CONFLICT.value())
+            .build();
+    }
+
+    @ExceptionHandler(InvalidUserCredentialsException.class)
+    @ResponseStatus(UNAUTHORIZED)
+    public ErrorDTO unauthorized(final InvalidUserCredentialsException invalidUserCredentialsException) {
+        log.error(invalidUserCredentialsException.getMessage());
+        return ErrorDTO.builder()
+            .message(invalidUserCredentialsException.getMessage())
+            .status(UNAUTHORIZED.value())
+            .build();
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(FORBIDDEN)
+    public ErrorDTO unauthorized(final ForbiddenException forbiddenException) {
+        log.error(forbiddenException.getMessage());
+        return ErrorDTO.builder()
+            .message(forbiddenException.getMessage())
+            .status(FORBIDDEN.value())
             .build();
     }
 

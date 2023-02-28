@@ -16,6 +16,7 @@ public class UserFriendService {
     private final UserFriendMapper userFriendMapper;
 
     public List<FriendResponseDTO> getUserFriends(final Long userId) {
+
         List<FriendResponseDTO> friendResponseDTOS = new ArrayList<>();
         userFriendRepository.findAllByUserId(userId).forEach(userFriend -> {
             FriendResponseDTO friendResponseDTO = userFriendMapper.mapToUserFriendDTO(userFriend);
