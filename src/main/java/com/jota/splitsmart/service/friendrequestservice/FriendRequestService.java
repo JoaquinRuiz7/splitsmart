@@ -46,7 +46,7 @@ public class FriendRequestService {
         }
 
         final User user = userRepository.findById(userId).orElseThrow(() -> {
-            throw new UserNotFoundException(format("User with id  %s not found.", userId));
+            throw new UserNotFoundException(format("User with id %s not found.", userId));
         });
 
         final FriendRequest friendRequest = friendRequestMapper.mapToFriendRequest(user, friend);

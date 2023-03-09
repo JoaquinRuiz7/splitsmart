@@ -38,10 +38,10 @@ public class ExpenseService {
     @Transactional(transactionManager = "splitSmartTransactionManager")
     public ExpenseDTO register(final Long userId, final ExpenseDTO request) {
 
-        User user = userRepository.findById(userId)
+        final User user = userRepository.findById(userId)
             .orElseThrow(() -> new UserNotFoundException(format("User with id %s not found", request.getUserId())));
 
-        List<User> payers = userRepository.findMultipleById(request.getPayers());
+        final List<User> payers = userRepository.findMultipleById(request.getPayers());
 
         if (payers.isEmpty()) {
             throw new UserNotFoundException(format("Users with ids %s not found", request.getPayers()));
@@ -67,7 +67,7 @@ public class ExpenseService {
 
     public ExpenseDTO updateExpense(final Long expenseId,
         final UpdateExpenseRequest updateExpenseRequest) {
-        Expense expense = expenseRepository.findById(expenseId)
+        final Expense expense = expenseRepository.findById(expenseId)
             .orElseThrow(() -> new ExpenseNotFoundException(format("Exception with id %s not found.", expenseId)));
 
         expense.setDescription(updateExpenseRequest.getDescription());
