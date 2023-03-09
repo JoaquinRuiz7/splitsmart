@@ -1,4 +1,4 @@
-package com.jota.splitsmart.service.authservice.request;
+package com.jota.splitsmart.exchangedata.auth;
 
 import lombok.Data;
 

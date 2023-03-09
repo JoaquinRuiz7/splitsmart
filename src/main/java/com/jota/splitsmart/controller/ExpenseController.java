@@ -2,9 +2,9 @@ package com.jota.splitsmart.controller;
 
 import static com.jota.splitsmart.context.ContextData.USER_ID;
 
-import com.jota.splitsmart.service.expenseservice.ExpenseService;
-import com.jota.splitsmart.service.expenseservice.dto.ExpenseDTO;
-import com.jota.splitsmart.service.expenseservice.request.UpdateExpenseRequest;
+import com.jota.splitsmart.exchangedata.expense.ExpenseDTO;
+import com.jota.splitsmart.exchangedata.expense.UpdateExpenseRequest;
+import com.jota.splitsmart.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PatchMapping;

@@ -1,9 +1,9 @@
-package com.jota.splitsmart.service.userfriendservice.response;
+package com.jota.splitsmart.exchangedata.user;
 
 import lombok.Data;
 
 @Data
-public class FriendResponseDTO {
+public class RegisterUserResponse {
 
     private Long id;
     private String name;

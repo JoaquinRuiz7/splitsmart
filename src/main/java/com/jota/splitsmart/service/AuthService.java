@@ -1,14 +1,14 @@
-package com.jota.splitsmart.service.authservice;
+package com.jota.splitsmart.service;
 
 import static java.lang.String.format;
 
 import com.jota.splitsmart.exception.InvalidUserCredentialsException;
 import com.jota.splitsmart.exception.UserNotFoundException;
+import com.jota.splitsmart.exchangedata.auth.LoginRequestDTO;
+import com.jota.splitsmart.exchangedata.auth.LoginResponseDTO;
 import com.jota.splitsmart.persistence.model.User;
 import com.jota.splitsmart.persistence.repository.UserRepository;
 import com.jota.splitsmart.security.JWT;
-import com.jota.splitsmart.service.authservice.request.LoginRequestDTO;
-import com.jota.splitsmart.service.authservice.response.LoginResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;

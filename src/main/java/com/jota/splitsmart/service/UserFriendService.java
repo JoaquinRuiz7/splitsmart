@@ -1,8 +1,8 @@
-package com.jota.splitsmart.service.userfriendservice;
+package com.jota.splitsmart.service;
 
 import com.jota.splitsmart.mapper.UserFriendMapper;
 import com.jota.splitsmart.persistence.repository.UserFriendRepository;
-import com.jota.splitsmart.service.userfriendservice.response.FriendResponseDTO;
+import com.jota.splitsmart.exchangedata.userfriend.FriendResponseDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

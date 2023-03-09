@@ -1,4 +1,4 @@
-package com.jota.splitsmart.service.friendrequestservice.response;
+package com.jota.splitsmart.exchangedata.friendrequest;
 
 import lombok.Data;
 

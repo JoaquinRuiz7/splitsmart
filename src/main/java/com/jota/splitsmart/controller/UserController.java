@@ -1,8 +1,8 @@
 package com.jota.splitsmart.controller;
 
-import com.jota.splitsmart.service.userservice.UserService;
-import com.jota.splitsmart.service.userservice.request.RegisterUserRequest;
-import com.jota.splitsmart.service.userservice.response.RegisterUserResponse;
+import com.jota.splitsmart.service.UserService;
+import com.jota.splitsmart.exchangedata.user.RegisterUserRequest;
+import com.jota.splitsmart.exchangedata.user.RegisterUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;

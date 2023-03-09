@@ -1,12 +1,12 @@
-package com.jota.splitsmart.service.debtsservice;
+package com.jota.splitsmart.service;
 
 import static java.math.RoundingMode.HALF_UP;
 
+import com.jota.splitsmart.exchangedata.debts.ExpenseDebtDTO;
+import com.jota.splitsmart.exchangedata.debts.UserDebtDTO;
 import com.jota.splitsmart.mapper.DebtsMapper;
 import com.jota.splitsmart.persistence.model.Debts;
 import com.jota.splitsmart.persistence.repository.DebtsRepository;
-import com.jota.splitsmart.service.debtsservice.response.ExpenseDebtDTO;
-import com.jota.splitsmart.service.debtsservice.response.UserDebtDTO;
 import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

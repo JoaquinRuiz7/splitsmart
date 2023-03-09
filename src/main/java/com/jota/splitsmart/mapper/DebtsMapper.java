@@ -1,10 +1,10 @@
 package com.jota.splitsmart.mapper;
 
+import com.jota.splitsmart.exchangedata.debts.ExpenseDebtDTO;
+import com.jota.splitsmart.exchangedata.debts.UserDebtDTO;
 import com.jota.splitsmart.persistence.model.Debts;
 import com.jota.splitsmart.persistence.model.Expense;
 import com.jota.splitsmart.persistence.model.User;
-import com.jota.splitsmart.service.debtsservice.response.ExpenseDebtDTO;
-import com.jota.splitsmart.service.debtsservice.response.UserDebtDTO;
 import java.math.BigDecimal;
 import java.time.Instant;
 import org.mapstruct.Mapper;

@@ -1,8 +1,8 @@
 package com.jota.splitsmart.controller;
 
-import com.jota.splitsmart.service.authservice.AuthService;
-import com.jota.splitsmart.service.authservice.request.LoginRequestDTO;
-import com.jota.splitsmart.service.authservice.response.LoginResponseDTO;
+import com.jota.splitsmart.exchangedata.auth.LoginRequestDTO;
+import com.jota.splitsmart.exchangedata.auth.LoginResponseDTO;
+import com.jota.splitsmart.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;

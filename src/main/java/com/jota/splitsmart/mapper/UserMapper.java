@@ -1,8 +1,8 @@
 package com.jota.splitsmart.mapper;
 
 import com.jota.splitsmart.persistence.model.User;
-import com.jota.splitsmart.service.userservice.request.RegisterUserRequest;
-import com.jota.splitsmart.service.userservice.response.RegisterUserResponse;
+import com.jota.splitsmart.exchangedata.user.RegisterUserRequest;
+import com.jota.splitsmart.exchangedata.user.RegisterUserResponse;
 import java.time.Instant;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
