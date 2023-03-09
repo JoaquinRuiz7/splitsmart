@@ -1,4 +1,4 @@
-package com.jota.splitsmart.service.expenseservice.request;
+package com.jota.splitsmart.exchangedata.expense;
 
 import java.math.BigDecimal;
 import javax.validation.constraints.NotEmpty;

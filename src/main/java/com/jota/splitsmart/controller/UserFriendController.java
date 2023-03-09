@@ -1,8 +1,8 @@
 package com.jota.splitsmart.controller;
 
 import com.jota.splitsmart.security.SecurityGuard;
-import com.jota.splitsmart.service.userfriendservice.UserFriendService;
-import com.jota.splitsmart.service.userfriendservice.response.FriendResponseDTO;
+import com.jota.splitsmart.service.UserFriendService;
+import com.jota.splitsmart.exchangedata.userfriend.FriendResponseDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

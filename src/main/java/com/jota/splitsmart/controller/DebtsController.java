@@ -1,9 +1,9 @@
 package com.jota.splitsmart.controller;
 
+import com.jota.splitsmart.exchangedata.debts.ExpenseDebtDTO;
+import com.jota.splitsmart.exchangedata.debts.UserDebtDTO;
 import com.jota.splitsmart.security.SecurityGuard;
-import com.jota.splitsmart.service.debtsservice.DebtsService;
-import com.jota.splitsmart.service.debtsservice.response.ExpenseDebtDTO;
-import com.jota.splitsmart.service.debtsservice.response.UserDebtDTO;
+import com.jota.splitsmart.service.DebtsService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;

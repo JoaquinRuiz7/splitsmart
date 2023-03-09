@@ -1,4 +1,4 @@
-package com.jota.splitsmart.service.userservice;
+package com.jota.splitsmart.service;
 
 import static java.lang.String.format;
 
@@ -6,8 +6,8 @@ import com.jota.splitsmart.exception.UserAlreadyRegisteredException;
 import com.jota.splitsmart.mapper.UserMapper;
 import com.jota.splitsmart.persistence.model.User;
 import com.jota.splitsmart.persistence.repository.UserRepository;
-import com.jota.splitsmart.service.userservice.request.RegisterUserRequest;
-import com.jota.splitsmart.service.userservice.response.RegisterUserResponse;
+import com.jota.splitsmart.exchangedata.user.RegisterUserRequest;
+import com.jota.splitsmart.exchangedata.user.RegisterUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

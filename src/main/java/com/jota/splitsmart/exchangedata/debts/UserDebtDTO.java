@@ -1,4 +1,4 @@
-package com.jota.splitsmart.service.debtsservice.response;
+package com.jota.splitsmart.exchangedata.debts;
 
 import java.math.BigDecimal;
 import lombok.Data;

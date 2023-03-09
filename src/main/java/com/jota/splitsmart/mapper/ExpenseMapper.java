@@ -1,8 +1,8 @@
 package com.jota.splitsmart.mapper;
 
+import com.jota.splitsmart.exchangedata.expense.ExpenseDTO;
 import com.jota.splitsmart.persistence.model.Expense;
 import com.jota.splitsmart.persistence.model.User;
-import com.jota.splitsmart.service.expenseservice.dto.ExpenseDTO;
 import java.time.Instant;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

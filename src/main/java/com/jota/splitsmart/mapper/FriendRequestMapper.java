@@ -2,7 +2,7 @@ package com.jota.splitsmart.mapper;
 
 import com.jota.splitsmart.persistence.model.FriendRequest;
 import com.jota.splitsmart.persistence.model.User;
-import com.jota.splitsmart.service.friendrequestservice.response.FriendRequestDTO;
+import com.jota.splitsmart.exchangedata.friendrequest.FriendRequestDTO;
 import java.time.Instant;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

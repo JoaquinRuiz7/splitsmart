@@ -1,4 +1,4 @@
-package com.jota.splitsmart.service.friendrequestservice;
+package com.jota.splitsmart.service;
 
 import static java.lang.String.format;
 
@@ -12,9 +12,9 @@ import com.jota.splitsmart.persistence.model.UserFriend;
 import com.jota.splitsmart.persistence.repository.FriendRequestRepository;
 import com.jota.splitsmart.persistence.repository.UserFriendRepository;
 import com.jota.splitsmart.persistence.repository.UserRepository;
-import com.jota.splitsmart.service.friendrequestservice.request.AcceptRejectFriendRequestDTO;
-import com.jota.splitsmart.service.friendrequestservice.request.AddFriendRequestDTO;
-import com.jota.splitsmart.service.friendrequestservice.response.FriendRequestDTO;
+import com.jota.splitsmart.exchangedata.friendrequest.AcceptRejectFriendRequestDTO;
+import com.jota.splitsmart.exchangedata.friendrequest.AddFriendRequestDTO;
+import com.jota.splitsmart.exchangedata.friendrequest.FriendRequestDTO;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

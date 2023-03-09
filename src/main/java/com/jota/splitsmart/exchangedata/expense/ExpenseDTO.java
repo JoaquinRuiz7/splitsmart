@@ -1,4 +1,4 @@
-package com.jota.splitsmart.service.expenseservice.dto;
+package com.jota.splitsmart.exchangedata.expense;
 
 import java.math.BigDecimal;
 import java.util.List;
