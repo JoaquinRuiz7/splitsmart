@@ -2,6 +2,7 @@ package com.jota.splitsmart.controller;
 
 import com.jota.splitsmart.exchangedata.user.RegisterUserRequest;
 import com.jota.splitsmart.exchangedata.user.RegisterUserResponse;
+import com.jota.splitsmart.security.SecurityGuard;
 import com.jota.splitsmart.service.UserService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+    private final SecurityGuard securityGuard;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -30,6 +32,7 @@ public class UserController {
     @PatchMapping("/{userId}")
     public RegisterUserResponse update(@PathVariable final Long userId,
         @RequestBody @Valid final RegisterUserRequest request) {
+        securityGuard.checkIfTokenBelongsToUser(userId);
         return userService.update(userId, request);
     }
 }
