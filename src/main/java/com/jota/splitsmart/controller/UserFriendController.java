@@ -1,10 +1,11 @@
 package com.jota.splitsmart.controller;
 
+import com.jota.splitsmart.exchangedata.userfriend.FriendResponseDTO;
 import com.jota.splitsmart.security.SecurityGuard;
 import com.jota.splitsmart.service.UserFriendService;
-import com.jota.splitsmart.exchangedata.userfriend.FriendResponseDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,4 +25,9 @@ public class UserFriendController {
         return userFriendService.getUserFriends(userId);
     }
 
+    @DeleteMapping("/{userId}/remove/{friendId}")
+    public void deleteFriend(@PathVariable final Long friendId, @PathVariable final Long userId) {
+        securityGuard.checkIfTokenBelongsToUser(userId);
+        userFriendService.deleteFriend(userId, friendId);
+    }
 }
