@@ -9,9 +9,9 @@ public interface DebtsRepository extends JpaRepository<Debts, Long> {
 
     List<Debts> findAllByExpenseId(final Long expenseId);
 
-    @Query(value = "SELECT * FROM debts ud WHERE ud.user_id = ?1 AND ud.expense_id = ?2", nativeQuery = true)
+    @Query(value = "SELECT debt FROM Debts debt WHERE debt.user.id = ?1 AND debt.expense.id = ?2")
     Debts findByUserAndExpense(final Long payerId, final Long expenseId);
 
-    @Query(value = "SELECT * FROM debts ud WHERE ud.user_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT debt FROM Debts debt WHERE debt.user.id = ?1")
     List<Debts> getUserDebts(final Long userId);
 }

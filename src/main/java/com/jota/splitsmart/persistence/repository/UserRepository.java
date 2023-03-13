@@ -8,15 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query(value = "SELECT * FROM \"user\" WHERE id IN (?1)", nativeQuery = true)
+    @Query(value = "SELECT user FROM User user WHERE user.id IN (?1)")
     List<User> findMultipleById(final List<Long> ids);
 
     Optional<User> findByEmail(final String email);
 
     Optional<User> findByEmailOrCellphone(final String email, final String cellphone);
-
-    Optional<User> findByCellphone(final String cellphone);
-
+    
     boolean existsByEmail(final String email);
 
 }

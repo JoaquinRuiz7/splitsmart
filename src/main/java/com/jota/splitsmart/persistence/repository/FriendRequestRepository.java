@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long> {
 
-    @Query(value = "SELECT * FROM friend_requests fr WHERE fr.friend_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT fr FROM FriendRequest fr WHERE fr.friend.id = ?1")
     List<FriendRequest> getReceivedFriendRequests(final Long userId);
 }
